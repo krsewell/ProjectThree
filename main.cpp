@@ -11,12 +11,11 @@
 #include <string>
 #include <locale>
 
-//Dec
+#include "magicsquare.hpp"
+
 short getUserShort();
-int getElementValue(int,int,short);
 
 using namespace std;
-//
 
 #endif
 
@@ -27,15 +26,21 @@ int main() {
   //file formatting and output.
 
   //get user short value which must be of odd order
-  short ofOrder = getUserShort();
-  cout << getElementValue(1,1,ofOrder);
+  short ofOrder;
+  do {
+    ofOrder = getUserShort();
+    MagicSquare square(ofOrder);
+    cout << square.getMagicNum() << endl;
+    ofOrder = 0;
+  } 
+  while (ofOrder != 0);
   
-
-  //algorithm n * ((i + j - 1 + [n/2]) % n) + ((i + 2j - 2) % n) + 1 = element value
-
-  //
+  return 0;
 
 }
+
+
+
 
 short getUserShort() {
   short uShort = 0;
@@ -51,28 +56,18 @@ short getUserShort() {
         isDigitFlag = false;
       }
     }
-    uShort = userString.stoi();
+    if (isDigitFlag) {
+      uShort = stoi(userString);
+    } else {
+      uShort = 2;
+    }
+    
+    if (uShort == 0) {
+      return 0;
+    }
     if (uShort % 2 == 0) {
       cout << "ERROR: that value is not odd." << endl;  
     }
   } 
   return uShort;
-}
-
-int getElementValue(int i, int j, short n) {
-  int value,
-      value2;
-
-  short halfn = n / 2; // n being odd the result will normally be x.5 however we want just x 
-  value = i + j - 1 + halfn; 
-  value %= n;
-  value *= n;
-
-  j *= 2;
-  value2 = i + j - 2;
-  value2 %= n;
-  value2++;
-
-  value += value2;
-  return value;
 }

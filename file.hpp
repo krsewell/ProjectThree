@@ -29,33 +29,24 @@ class File {
 private:
 
     MagicSquare * m_square;
-    stringstream * m_stream;
-    stringstream m_streamObj;
-    
+    stringstream m_streamObj; 
     string * m_name;
-    
-    ofstream * m_file;
     ofstream m_fileObj;
     
 public:
 
-    File::File(const MagicSquare&,string&);
-    File::File(const MagicSquare&,stringstream&,string&,ofstream&);
+    File::File(MagicSquare&,string&);
     File::~File();
 
     bool File::setSquare(MagicSquare&);
-    bool File::setStream(stringstream&);
     bool File::setName(string&);
-    bool File::setFile(ofstream&);
 
     MagicSquare* File::getSquare() const;
-    stringstream* File::getStream() const;
     string* File::getName() const;
-    ofstream* File::getFile() const;
 
-    bool File::writeFile() const;
-    bool File::appendFile() const;
-    bool File::openFile() const;
+    bool File::writeFile();
+    bool File::appendFile();
+    bool File::openFile();
 
     bool File::formatFile();
 

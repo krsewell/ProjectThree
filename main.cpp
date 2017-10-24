@@ -7,15 +7,21 @@
 #ifndef MAIN_H_INCL_GUARD
 #define MAIN_H_INCL_GUARD
 
+#include "magicsquare.hpp"
+#include "file.hpp"
+
 #include <iostream>
 #include <string>
 #include <locale>
 
-#include "magicsquare.hpp"
-
 short getUserShort();
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::cin;
+using std::stoi;
+using std::stringstream;
 
 #endif
 
@@ -24,16 +30,25 @@ using namespace std;
 int main() {
   //Magic Squares up to 999 rows and columns. 999^2 is 6 digit number
   //file formatting and output.
+  
+  //create the file object. and dependancies
+  File file();
 
-  //get user short value which must be of odd order
   short ofOrder;
-  do {
+  while (true) {
+    //gets a user value that is either odd from 1-999, or 0
     ofOrder = getUserShort();
+    
+    //code that will exit the loop
+    if (ofOrder == 0) {
+      break;
+    }
+    //create the magic square object
     MagicSquare square(ofOrder);
-    cout << square.getMagicNum() << endl;
-    ofOrder = 0;
-  } 
-  while (ofOrder != 0);
+
+
+    
+  }
   
   return 0;
 
@@ -69,5 +84,7 @@ short getUserShort() {
       cout << "ERROR: that value is not odd." << endl;  
     }
   } 
+  cout  << "If you would like to exit without creating another Magic Square\n" 
+        << "you may do so by entering 0 for your next value.\n\n";
   return uShort;
 }

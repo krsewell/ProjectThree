@@ -13,19 +13,20 @@ MagicSquare::MagicSquare(short ofOrder) : m_ofOrder(ofOrder) {
 
 MagicSquare::~MagicSquare() {
     delArray(m_squareArray);
-    std::cout << "Square object of size: " << m_ofOrder << " has been deleted.\n"; 
+    //std::cout << "Square object of size: " << m_ofOrder << " has been deleted.\n"; 
 }
 
 short MagicSquare::getSize() const {
-    return this->m_ofOrder;
-}
-int MagicSquare::getElement(short i, short j) const {
-    return this->m_squareArray[i][j];
-}
-int MagicSquare::getMagicNum() const {
-    return this->m_magicNumber;
+    return m_ofOrder;
 }
 
+int MagicSquare::getElement(short i, short j) const {
+    return m_squareArray[i][j];
+}
+
+int MagicSquare::getMagicNum() const {
+    return m_magicNumber;
+}
 
 void MagicSquare::mallocArray(int ** &ptr,short n) {
   try {  
@@ -57,7 +58,6 @@ void MagicSquare::fillArray() {
       }
   }
 }
-
 
 int MagicSquare::generateElementValue(short i, short j) const {
     int value, value2;

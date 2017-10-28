@@ -36,12 +36,13 @@ bool formatFile(const MagicSquare&, ostringstream&);
 
 int main() {
   printHeader();
-  
   short ofOrder;
   const string filename = getUserFilename();
   std::ofstream file;
 
-  //open file for first time to see if it can be opened. 
+  //open file for first time to see if it can be opened. Because the program will try to open a file
+  //with the operating system. Windows will kill the program before it gets to the error code below
+  //if the name that was entered has forbidden char like " or * 
   file.open(filename,std::ios::app);
   if (!file.is_open()) {
     cout << "Error opening file. Please re-run the program to try again." << endl;
@@ -77,14 +78,15 @@ int main() {
 const char * getUserFilename() {
   string userFilename;
   string extention = ".txt";
+
   while (userFilename.empty()) {
     cout << "Please enter a filename: ";
     cin >> userFilename;
     cout << endl;
 
     if (!userFilename.empty()) {
-      auto const pos = userFilename.find_last_of('.');
-      const auto currentExtention = userFilename.substr(pos + 1);
+      size_t const pos = userFilename.find_last_of('.');
+      const string currentExtention = userFilename.substr(pos + 1);
       
       if (currentExtention != "txt") {
         userFilename += extention; 
@@ -92,6 +94,7 @@ const char * getUserFilename() {
       return userFilename.c_str();
     }
   }
+  return nullptr; // line should never evaluate
 }
 
 void printHeader() {
@@ -138,19 +141,17 @@ bool formatFile(const MagicSquare& square, ostringstream& streamObj) {
   const short SIZE = square.getSize();
   //header
   streamObj << "---------------------------------------------------------------" << endl;
-  streamObj << "\n Magic Square of size " << SIZE << endl;
-  streamObj << "Magic Constant is equal to " << square.getMagicNum() << endl;
+  streamObj << "\nMagic Square " << SIZE << " by " << SIZE << '.' << endl;
+  streamObj << "Magic Constant is " << square.getMagicNum() << '.' << endl;
   streamObj << endl << endl;
 
   //output square
-
-  
   for (short i = 0; i < SIZE; i++) {
     for (short j = 0; j < SIZE; j++) {
       streamObj << setw(8) << square.getElement(i,j) << ' ';
     }
     streamObj << endl;
   }
-  
+  streamObj << endl;
   return streamObj.good();
 }
